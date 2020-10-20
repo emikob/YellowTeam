@@ -1,0 +1,138 @@
+---
+title: "Problem Sheet 2"
+author: "Emiko Bell"
+date: "13/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(here)
+library(knitr)
+library(magrittr)
+library(psych)
+library(ggplot2)
+library(tidyverse)
+library(ggpubr)
+library(rstatix)
+library(car)
+library(MASS)
+```
+
+# 1. Getting data into R
+```{r}
+thedataset <- read.table(here("data/TheDataSet.csv"), sep = " ", header = TRUE)
+head(thedataset,n = 5L) %>%
+  knitr::kable(digits = 2)
+```
+
+
+
+# 2. Exploring data
+
+**2.1.** To get a sense of your data, use the functions summary, str, table. What types are the variables? Guess what the IVs and DVs are?
+```{r}
+summary(thedataset)
+str(thedataset)
+table(thedataset$text, thedataset$is_lure)
+```
+IVs are most likely the text, key, group, old.
+DVs are most likely rt, correct, and success.
+
+**2.2.** Pretty great that you now have a better understanding of this data set, but in this session we will largely ignore most of it and just focus on the dependent variable rt.
+
+**2.2.1.** Make a new data frame in which you only keep success trials and call it AccData, for “accurate data”.
+```{r}
+success <- thedataset["success"]
+accdata <- subset(thedataset, success > 0)
+#Remember, this is how you took out a category of a variable while leaving the other variables as-is
+#Can also you use filter for big data set
+#Another solution: AccData <- TheDataSet[TheDataSet$success==TRUE,]
+```
+
+**2.2.2** What is the difference between skew & kurtosis? What is the skew and the kurtosis of the reaction times? Report all major central tendency measures and the dispersion/range of the reaction time distribution. You can answer all of this in 2 lines of code, using 2 functions.
+
+Skew is either positive or negative (tails going to left or right), and the kurtosis is how "sharp" the peak of the distribution is.
+```{r}
+describe(accdata) %>%
+  knitr::kable(digits = 2)
+```
+
+
+
+# 3. First plotting attempts
+
+**3.1.** Install and load ggplot2
+Done
+
+**3.2.** Plot reaction time
+
+```{r}
+ggplot(data = accdata, aes(x=is_lure, y= rt)) + geom_boxplot()
+
+ggplot(data = accdata, aes(x=is_lure, y=rt, fill=is_lure))+
+  stat_summary(fun = "mean", geom = "bar", position="dodge")+
+  stat_summary(fun.data = mean_cl_normal, geom="errorbar",
+               position = position_dodge(width=0.9), width=0.2)
+
+#another option: labs(title = "Reaction times for each type of lure", x = "Lure", y = "Reaction time(s)")
+```
+
+
+It looks like fun.y no longer works:
+https://stackoverflow.com/questions/61216963/fun-y-and-stat-summary-stopped-working-in-ggplot
+
+
+
+# 4. Assumptions of parametric data
+
+
+**4.1.** Assumption of normality
+
+**4.1.1.** Plot the distribution
+```{r}
+(hits.rt <- ggplot(data = accdata, aes(rt)) + geom_histogram(aes(y=..density..), colour = "black", fill = "blue")) + labs(x = "Reaction Time", y = "Density")
+```
+
+**4.1.2.** Add a normally distributed curve as a comparison - pick the mean and SD from the data.
+```{r}
+hits.rt + stat_function(fun = dnorm, args = list(mean = mean(accdata$rt, na.rm=T), sd = sd(accdata$rt, na.rm=T))) + labs(x = "Reaction Time", y = "Density")
+```
+
+**4.1.3.**
+Q-Q Plot
+```{r}
+ggplot(accdata, aes(sample = rt)) + stat_qq(colour = "dark gray") + stat_qq_line(colour = "dark blue")
+```
+The rt data does not necessarily conform to the normal curve -- it tapers off after a while.
+
+**4.1.4.**
+```{r}
+shapiro.test(accdata$rt)
+```
+The rt data is not normally distributed.
+
+**4.2. Homogeneity of Variance**
+```{r}
+leveneTest(accdata$rt, accdata$group)
+```
+The groups are homogeneous in variance.
+
+**4.3. Violated Assumptions**
+
+**4.3.1.**
+**4.3.1.1.-3.**
+```{r}
+accdata$logrt <- log(accdata$rt)
+accdata$sqrtrt <- sqrt(accdata$rt)
+accdata$speed <- 1/rt
+describe(accdata$speed)
+```
+The kurtosis is wild...is this considered normal? I think it's way above the bounds of "normality." Not sure why this is called speed, other than the data is plotted from the mean of 1 and would show a greater or slower speed.
+
+**4.3.2**
+```{r}
+lambdalist <- boxcox(rt~group, data = accdata)
+lambda <- lambdalist$x[which.max(lambdalist$y)]
+```
+
