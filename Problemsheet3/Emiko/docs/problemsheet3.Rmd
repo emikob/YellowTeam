@@ -1,30 +1,89 @@
 ---
 title: "Problemsheet 3"
 author: "Emiko Bell"
-date: "10/20/2020"
+date: "20/10/2020"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(psych)
+library(car)
+library(ggplot2)
+library(here)
 ```
 
-## R Markdown
+# 1. Revision
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+**1.1. Getting data into R**
+```{r}
+thedataset <- read.table(here("data/TheDataSet.csv"), sep = " ", header = TRUE)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+head(thedataset, 10) %>%
+  knitr::kable(digits = 2)
+```
+**1.2. Exploring data**
+```{r}
+summary(thedataset)
 ```
 
-## Including Plots
+# 2. Sampling, creating data, and aggregating
 
-You can also embed plots, for example:
+**2.1. Probability sampling**
+```{r}
+#To take the first 12 rows, I used the following code. Note that the "," denotes all columns.
+x <- thedataset[c(1:12),]
+#Then, to randomly sample ROWS from the above 12 rows, I used the following code.
+sample_n(x, 6, replace = TRUE)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+#Sampling with replacement means that the first result will not affect the second results (e.g. can get the same value multiple times). Without replacement means that there is some kind of connection between two values (i.e. get each value only one time).
+sample_n(x, 6, replace = FALSE)
+
+#Setting the same seed would return the same results every time.
+set.seed(44)
+sample_n(x, 6)
+
+#Predefined probability: we can change the weight to each variable
+sample(c("pass", "fail"), 10, replace = TRUE, prob = c(.75, .25))
+```
+**2.2 Generate non-random data**
+```{r}
+#Repeating vectors
+
+rep(c("pass", "fail"), times = 5)
+
+rep(c("pass", "fail"), times = 5, each = 2)
+
+rep(1, 40*(1-.8))
+
+#Sequences
+
+seq(from = 1, to = 10, by = 1)
+
+seq(from = 1, to=10, by = 0.5)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+**2.3. Random data generation**
+
+```{r}
+#uniform distribution
+runif(6)
+
+#normal distribution
+rnorm(6)
+
+#Now generate 2 different vectors of 100 random numbers. One from a normal distribution with a mean of 0 and a standard deviation of 2, and one from a uniform distribution with a minimum of -3 and a maximums of 3. Quickly plot these two using hist or a combination of plot and density.
+
+normal <- rnorm(100, mean = 0, sd = 2)
+
+uniform <- runif(100, min = -3, max = 3)
+
+# historgram and/or density plot
+
+hist(normal)
+hist(uniform)
+
+```
+
+**2.3. Creating a data set**
