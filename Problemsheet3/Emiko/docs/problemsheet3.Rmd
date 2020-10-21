@@ -87,3 +87,104 @@ hist(uniform)
 ```
 
 **2.3. Creating a data set**
+```{r}
+set.seed(88)
+sandbox <- data.frame(
+  pokemon=factor(rep(c("Charizard",
+                       "Pikachu",
+                       "Eevee"), each=100)),
+  power=c(rnorm(100, mean=60, sd=2),
+          rnorm(100, mean=55, sd=2),
+          rnorm(100, mean=50, sd=2)),
+  friendliness=c(rnorm(100, mean=10, sd=2),
+               rnorm(100, mean=15, sd=2),
+               rnorm(100, mean=20, sd=2))
+  )
+
+
+summary(sandbox)
+ggplot(sandbox, aes(x = power)) +
+geom_density(colour = "dark blue", fill = "dark blue") + geom_density(aes(x = friendliness), colour = "light blue", fill = "light blue", alpha = 0.5)
+# the more transparent density plots are the friendliness values and the full one are the power values
+```
+
+**2.4. Aggregating**
+```{r}
+(aggPokemon <- aggregate(data = sandbox, FUN = mean, friendliness ~ pokemon))
+```
+If this makes it a bit more intuitive, you can read the arguments of the function as “From the data frame sandbox, aggregate the mean (this can be a different function, e.g. median, sd, sum) of the variable friendliness as a function of (~) the variable pokemon.
+
+Now try to aggregate the mean of the power variable as a function of Pokémon type. You can also use cbind to aggregate both friendliness and power in the same data frame. Look at the Examples in the help function of aggregate for inspiration.
+
+```{r}
+(aggPokemon <- aggregate(data = sandbox, FUN = mean, power ~ pokemon))
+```
+
+# 3. Correlation
+
+**3.1. Scatterplot**
+```{r}
+ggplot(sandbox, aes(x = power, y = friendliness)) + geom_point(colour = "dark green", shape = "triangle") + geom_smooth(method = lm, colour = "red", se = FALSE)
+```
+
+**3.2 From covariance to correlation**
+
+**3.2.1. Covariance**
+```{r}
+cov(sandbox$friendliness, sandbox$power)
+```
+
+**3.2.2. Correlation**
+```{r}
+corrcoef <- cor(sandbox$friendliness, sandbox$power)
+
+cor.test(sandbox$friendliness, sandbox$power)
+
+corrcoef^2
+```
+
+**3.2.3. Non-parametric correlation**
+```{r}
+cor.test(sandbox$friendliness, sandbox$power, method = "spearman")
+```
+
+**3.2.4. Issues**
+
+Charizard Test
+```{r}
+charizard <- filter(sandbox, sandbox$pokemon == "Charizard")
+
+cor.test(charizard$friendliness, charizard$power)
+
+ggplot(charizard, aes(x = power, y = friendliness)) + geom_point(colour = "red", shape = "circle") + geom_smooth(method = lm, colour = "firebrick4", se = FALSE)
+
+```
+
+Pikachu Test
+```{r}
+pikachu <- filter(sandbox, sandbox$pokemon == "Pikachu")
+
+cor.test(pikachu$friendliness, pikachu$power)
+
+ggplot(sandbox, aes(x = power, y = friendliness)) + geom_point(colour = "yellow", shape = "triangle") + geom_smooth(method = lm, colour = "gold4", se = FALSE)
+```
+
+Eevee Test
+```{r}
+eevee <- filter(sandbox, sandbox$pokemon == "Eevee")
+
+cor.test(eevee$friendliness, eevee$power)
+
+ggplot(sandbox, aes(x = power, y = friendliness)) + geom_point(colour = "cyan3", shape = "#") + geom_smooth(method = lm, colour = "blue4", se = FALSE)
+```
+
+# 4. Applying to The Data Set
+```{r}
+aggdata <- aggregate(data = thedataset, FUN = mean, cbind(success, rt) ~ code)
+
+cor.test(aggdata$success, aggdata$rt)
+
+ggplot(aggdata, aes(x = success, y = rt)) + geom_point(colour = "seagreen3", shape = "circle") + geom_smooth(method = lm, colour = "dodgerblue4", se = FALSE)
+
+```
+No significance, no relationship.
