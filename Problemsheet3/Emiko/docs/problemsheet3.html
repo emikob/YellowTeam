@@ -556,27 +556,34 @@ x &lt;- thedataset[c(1:12),]
 sample_n(x, 6, replace = TRUE)</code></pre>
 <pre><code>##               text       is_lure key yes_key        rt group   code   old
 ## 10    b&#39;craftsman&#39; critical past   a       l 0.7574602     0 cl98xe FALSE
-## 8...2      b&#39;door&#39;       neutral   a       l 1.2600136     0 cl98xe FALSE
-## 2        b&#39;winter&#39;       correct   l       l 1.2628160     0 cl98xe  TRUE
+## 3        b&#39;chilly&#39;       correct   l       l 0.7302299     0 cl98xe  TRUE
+## 2...3    b&#39;winter&#39;       correct   l       l 1.2628160     0 cl98xe  TRUE
 ## 8...4      b&#39;door&#39;       neutral   a       l 1.2600136     0 cl98xe FALSE
-## 1          b&#39;fish&#39;       neutral   a       l 3.8324152     0 cl98xe FALSE
-## 5          b&#39;calm&#39;       neutral   a       l 1.1846536     0 cl98xe FALSE
+## 8...5      b&#39;door&#39;       neutral   a       l 1.2600136     0 cl98xe FALSE
+## 2...6    b&#39;winter&#39;       correct   l       l 1.2628160     0 cl98xe  TRUE
 ##       correct success
 ## 10      FALSE    TRUE
-## 8...2   FALSE    TRUE
-## 2        TRUE    TRUE
+## 3        TRUE    TRUE
+## 2...3    TRUE    TRUE
 ## 8...4   FALSE    TRUE
-## 1       FALSE    TRUE
-## 5       FALSE    TRUE</code></pre>
+## 8...5   FALSE    TRUE
+## 2...6    TRUE    TRUE</code></pre>
 <pre class="r"><code>#Sampling with replacement means that the first result will not affect the second results (e.g. can get the same value multiple times). Without replacement means that there is some kind of connection between two values (i.e. get each value only one time).
 sample_n(x, 6, replace = FALSE)</code></pre>
-<pre><code>##          text is_lure key yes_key        rt group   code   old correct success
-## 5     b&#39;calm&#39; neutral   a       l 1.1846536     0 cl98xe FALSE   FALSE    TRUE
-## 12 b&#39;syringe&#39; neutral   a       l 0.8487024     0 cl98xe FALSE   FALSE    TRUE
-## 1     b&#39;fish&#39; neutral   a       l 3.8324152     0 cl98xe FALSE   FALSE    TRUE
-## 3   b&#39;chilly&#39; correct   l       l 0.7302299     0 cl98xe  TRUE    TRUE    TRUE
-## 4     b&#39;sock&#39; neutral   a       l 0.9523111     0 cl98xe FALSE   FALSE    TRUE
-## 8     b&#39;door&#39; neutral   a       l 1.2600136     0 cl98xe FALSE   FALSE    TRUE</code></pre>
+<pre><code>##             text       is_lure key yes_key        rt group   code   old correct
+## 12    b&#39;syringe&#39;       neutral   a       l 0.8487024     0 cl98xe FALSE   FALSE
+## 9  b&#39;secrtetary&#39; critical past   a       l 0.8449864     0 cl98xe FALSE   FALSE
+## 2      b&#39;winter&#39;       correct   l       l 1.2628160     0 cl98xe  TRUE    TRUE
+## 8        b&#39;door&#39;       neutral   a       l 1.2600136     0 cl98xe FALSE   FALSE
+## 4        b&#39;sock&#39;       neutral   a       l 0.9523111     0 cl98xe FALSE   FALSE
+## 10  b&#39;craftsman&#39; critical past   a       l 0.7574602     0 cl98xe FALSE   FALSE
+##    success
+## 12    TRUE
+## 9     TRUE
+## 2     TRUE
+## 8     TRUE
+## 4     TRUE
+## 10    TRUE</code></pre>
 <pre class="r"><code>#Setting the same seed would return the same results every time.
 set.seed(44)
 sample_n(x, 6)</code></pre>

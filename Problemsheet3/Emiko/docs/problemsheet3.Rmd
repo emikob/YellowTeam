@@ -44,6 +44,8 @@ sample_n(x, 6, replace = FALSE)
 set.seed(44)
 sample_n(x, 6)
 
+#Seed is not universal over all computers, just mine
+
 #Predefined probability: we can change the weight to each variable
 sample(c("pass", "fail"), 10, replace = TRUE, prob = c(.75, .25))
 ```
@@ -103,8 +105,8 @@ sandbox <- data.frame(
 
 
 summary(sandbox)
-ggplot(sandbox, aes(x = power)) +
-geom_density(colour = "dark blue", fill = "dark blue") + geom_density(aes(x = friendliness), colour = "light blue", fill = "light blue", alpha = 0.5)
+ggplot(sandbox, aes(x = power, fill = pokemon)) +
+geom_density() + geom_density(aes(x = friendliness, fill = pokemon), alpha = 0.5)
 # the more transparent density plots are the friendliness values and the full one are the power values
 ```
 
