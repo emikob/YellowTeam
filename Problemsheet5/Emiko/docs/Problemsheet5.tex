@@ -1,0 +1,940 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Problemsheet 5},
+  pdfauthor={Emiko Bell},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Problemsheet 5}
+\author{Emiko Bell}
+\date{11/9/2020}
+
+\begin{document}
+\maketitle
+
+\hypertarget{contrast-coding}{%
+\section{1. Contrast coding}\label{contrast-coding}}
+
+Regression techniques and any other linear model (LM), such as multiple
+or logistic regression analysis, require factors of the experimental
+design to enter the model as contrasts. We discussed a simple 2-level
+case last week, but in order to gain a better theoretical and practical
+intuition about contrasts, we might need a few more examples. Contrasts
+(i.e., planned comparisons) between specific conditions or clusters of
+conditions are a very effective way to align our expectations with the
+statistical model of choice. We will keep using the lexdec data set from
+last session in order to get a better intuition about contrast coding in
+regression-based procedures. This will make our life a bit easier in the
+coming weeks.
+
+Read-in the lexdec data set, subset the same variables as last time and
+save them into a data frame called data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(lexdec)}
+
+\NormalTok{selection <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Subject"}\NormalTok{, }\StringTok{"RT"}\NormalTok{, }\StringTok{"NativeLanguage"}\NormalTok{, }\StringTok{"Frequency"}\NormalTok{,}\StringTok{"SubjFreq"}\NormalTok{)}
+\NormalTok{data <-}\StringTok{ }\NormalTok{lexdec[selection]}
+\KeywordTok{head}\NormalTok{(data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Subject       RT NativeLanguage Frequency SubjFreq
+## 1      A1 6.340359        English  4.859812     3.12
+## 2      A1 6.308098        English  4.605170     2.40
+## 3      A1 6.349139        English  4.997212     3.88
+## 4      A1 6.186209        English  4.727388     4.52
+## 5      A1 6.025866        English  7.667626     6.04
+## 6      A1 6.180017        English  4.060443     3.28
+\end{verbatim}
+
+\hypertarget{comparing-two-conditionslevels}{%
+\subsection{1.1. Comparing two
+conditions/levels}\label{comparing-two-conditionslevels}}
+
+Like last time, run a simple regression predicting reaction times, by
+the factor NativeLanguage.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nlreg <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(RT }\OperatorTok{~}\StringTok{ }\NormalTok{NativeLanguage, }\DataTypeTok{data =}\NormalTok{ data)}
+
+\KeywordTok{summary}\NormalTok{(nlreg)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = RT ~ NativeLanguage, data = data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.56877 -0.15289 -0.03231  0.11480  1.11318 
+## 
+## Coefficients:
+##                     Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)         6.318309   0.007435  849.78   <2e-16 ***
+## NativeLanguageOther 0.155821   0.011358   13.72   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.2289 on 1657 degrees of freedom
+## Multiple R-squared:  0.102,  Adjusted R-squared:  0.1015 
+## F-statistic: 188.2 on 1 and 1657 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+Now calculate the overall mean reaction time for each of the levels of
+the language, so English \& Other. You will need these throughout this
+session, so make sure to get the mean values.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(data}\OperatorTok{$}\NormalTok{RT[data}\OperatorTok{$}\NormalTok{NativeLanguage}\OperatorTok{==}\StringTok{"English"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6.318309
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(data}\OperatorTok{$}\NormalTok{RT[data}\OperatorTok{$}\NormalTok{NativeLanguage}\OperatorTok{==}\StringTok{"Other"}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6.47413
+\end{verbatim}
+
+\hypertarget{treatmentdummy-contrasts}{%
+\subsection{1.2. Treatment/Dummy
+contrasts}\label{treatmentdummy-contrasts}}
+
+What do you see when you compare the means for each condition with the
+coefficients from the model? 1. The intercept is the mean for native
+speakers 2. The slope is the difference between the means of the two
+groups. Let this soak in for a moment - make sure it makes sense. As
+mentioned last session, the result is a consequence of the default
+contrast coding of the factor NativeLanguage. R assigns treatment/dummy
+contrasts to factors and orders their levels alphabetically. The first
+factor level (here: English) is coded as 0 and the second level (here:
+Other) is coded as 1.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{contrasts}\NormalTok{(data}\OperatorTok{$}\NormalTok{NativeLanguage)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         Other
+## English     0
+## Other       1
+\end{verbatim}
+
+In regressions with categorical predictors, you can think of the
+unstandardized coefficients as difference scores - going one unit on x,
+relates to making a step from one level to the other. As there is no
+actual 0 point, the intercept values denotes the mean of the first
+level. Look back at the contrasts coding last session, and you will see
+that when you change the base of the treatment contrasts, the sign of
+the coefficients flips, but the value remains the same. Make sure you
+understand why this happens.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{contrasts}\NormalTok{(data}\OperatorTok{$}\NormalTok{NativeLanguage)<-}\KeywordTok{contr.treatment}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DataTypeTok{base=}\DecValTok{2}\NormalTok{)}
+\KeywordTok{summary}\NormalTok{(}\KeywordTok{lm}\NormalTok{(RT }\OperatorTok{~}\StringTok{ }\NormalTok{NativeLanguage, data))}\OperatorTok{$}\NormalTok{coefficients}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                   Estimate  Std. Error  t value     Pr(>|t|)
+## (Intercept)      6.4741304 0.008585508 754.0766 0.000000e+00
+## NativeLanguage1 -0.1558212 0.011357559 -13.7196 1.180239e-40
+\end{verbatim}
+
+\hypertarget{sum-contrasts}{%
+\subsection{1.3. Sum contrasts}\label{sum-contrasts}}
+
+There are many ways to define contrasts in order to test the critical
+comparisons in your design and we will get to know more and more as we
+go along, but for now we will take it slow. An important way to code
+contrasts are SUM CONTRASTS, in which one of the conditions is coded as
+−1 and the other as 1, You can imagine this as `centering' the effects
+at the grand mean (i.e., the mean of the two group means). You can
+custom-make these kinds of contrasts in R, but for convenience and
+accuracy we will use specific functions.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{contr.sum}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   [,1]
+## 1    1
+## 2   -1
+\end{verbatim}
+
+In the same way as above, we can override the contrasts that our factor
+currently has with the ones we would like to use. Lets have a look at
+our current contrast coding:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{contrasts}\NormalTok{(data}\OperatorTok{$}\NormalTok{NativeLanguage)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         1
+## English 1
+## Other   0
+\end{verbatim}
+
+We can also always check how the levels of our factor are ordered:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{levels}\NormalTok{(data}\OperatorTok{$}\NormalTok{NativeLanguage)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "English" "Other"
+\end{verbatim}
+
+We of course already knew that R orders them alphabetically by default,
+but when doing a lot of data manipulations it is often useful to keep on
+top of these changes.
+
+Now lets re-code the contrasts:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(}\KeywordTok{contrasts}\NormalTok{(data}\OperatorTok{$}\NormalTok{NativeLanguage) <-}\StringTok{ }\KeywordTok{contr.sum}\NormalTok{(}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   [,1]
+## 1    1
+## 2   -1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{contrasts}\NormalTok{(data}\OperatorTok{$}\NormalTok{NativeLanguage)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         [,1]
+## English    1
+## Other     -1
+\end{verbatim}
+
+Now re-run the regression and evaluate how the coefficient and intercept
+have changed.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{newlm <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(RT }\OperatorTok{~}\StringTok{ }\NormalTok{NativeLanguage, }\DataTypeTok{data =}\NormalTok{ data)}
+\KeywordTok{summary}\NormalTok{(newlm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = RT ~ NativeLanguage, data = data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.56877 -0.15289 -0.03231  0.11480  1.11318 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)      6.396220   0.005679 1126.34   <2e-16 ***
+## NativeLanguage1 -0.077911   0.005679  -13.72   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.2289 on 1657 degrees of freedom
+## Multiple R-squared:  0.102,  Adjusted R-squared:  0.1015 
+## F-statistic: 188.2 on 1 and 1657 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+The intercept is now the grand mean of the two group means.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(mE <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(data}\OperatorTok{$}\NormalTok{RT[data}\OperatorTok{$}\NormalTok{NativeLanguage}\OperatorTok{==}\StringTok{"English"}\NormalTok{]))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6.318309
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(mO <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(data}\OperatorTok{$}\NormalTok{RT[data}\OperatorTok{$}\NormalTok{NativeLanguage}\OperatorTok{==}\StringTok{"Other"}\NormalTok{]))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6.47413
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{mean}\NormalTok{(}\KeywordTok{c}\NormalTok{(mE,mO))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6.39622
+\end{verbatim}
+
+For now we ignore the difference in the decimal places, which is due to
+unequal observations per group.
+
+The slope codes the difference of the group associated with the first
+factor level and the GM. Note that the label of the slope coefficient is
+appended to the factor level (i.e., 1). Currently, the first level of
+NativeLanguage refers to English. Therefore, the predicted speed for the
+group of English subjects is 6.396 - 0.078 = 6.318 (cf.~the output
+above). From this slope you can also infer that when you add 0.078 to
+the intercept (grand mean) you will get the predicted reaction time for
+Other.
+
+To summarize, treatment contrasts and sum contrasts are two possible
+ways to compare the two groups, and they test different hypotheses.
+Treatment contrasts compare one or more means against a baseline
+condition, whereas sum contrasts allow us to determine whether a
+condition's mean is significantly different from the GM (which in the
+two-group case implies also a significant difference to the second
+group). We will begin next session with a 3-level scenario, which makes
+things a bit more difficult.
+
+\hypertarget{logistic-regression}{%
+\section{2. Logistic regression}\label{logistic-regression}}
+
+In comparison to multiple regression, logistic regression is used to
+model categorical variables - instead of continuous ones. In cases of
+only two categorical outcomes we speak of a binary logistic regression
+and whenever we use several predictor variables this is a multinomial
+\textbar{} polychotomous logistic regression. One of the major
+conceptual milestones to check off here is that instead of predicting
+the value of a variable Y from predictor variables Xs - we instead
+predict the probability of Y occurring given known values of X. Logistic
+regression is in reality an ordinary regression using the logit as the
+response variable. The logit transformation allows for a linear
+relationship between the response variable and the coefficients.
+
+\hypertarget{new-data-set}{%
+\subsection{2.1. New data set}\label{new-data-set}}
+
+To warm up to logistic regression, we will try out reading in a new data
+set again. Read in the concept\_data txt file using read.table and save
+it to a data frame called GLMdata. Have a look at the summary of the
+data and get an idea of the different variables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{GLMdata <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\KeywordTok{here}\NormalTok{(}\StringTok{"data/concept_data.txt"}\NormalTok{), }\DataTypeTok{sep =} \StringTok{" "}\NormalTok{, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{, }\DataTypeTok{stringsAsFactors =} \OtherTok{TRUE}\NormalTok{)}
+
+\KeywordTok{head}\NormalTok{(GLMdata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   vp stim par1 par2 dv
+## 1  1    1    4    A  0
+## 2  1    2    4    A  0
+## 3  1    3    4    A  0
+## 4  1    4    4    A  0
+## 5  1    5    3    A  0
+## 6  1    6    4    A  0
+\end{verbatim}
+
+This data set offers one participant variable, one variable denoting
+which stimulus was used, two variables coding the experimental
+conditions and one DV. I guess you can already guess the nature of our
+DV, but nevertheless, please plot a very simple histogram.
+
+\emph{HAD TO RUN STRINGS AS FACTORS = TRUE}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(GLMdata, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ dv)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\includegraphics{Problemsheet5_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+Lets get a sense of the data before we dive into the inferentials of
+logistic regression. Get the mean dv as a function of par2. Start using
+aggregate for operations like this.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{aggregate}\NormalTok{(dv }\OperatorTok{~}\StringTok{ }\NormalTok{par2, GLMdata, }\DataTypeTok{FUN =}\NormalTok{ mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   par2    dv
+## 1    A 0.284
+## 2    B 0.716
+\end{verbatim}
+
+Next, we want to check how the contrasts are currently coded for par2.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{contrasts}\NormalTok{(GLMdata}\OperatorTok{$}\NormalTok{par2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   B
+## A 0
+## B 1
+\end{verbatim}
+
+\emph{(There's an error saying contrasts only apply to factors??) I had
+to specify it as factors}
+
+\hypertarget{performing-a-logistic-regression}{%
+\subsection{2.1. Performing a logistic
+regression}\label{performing-a-logistic-regression}}
+
+Now we are ready to conduct a logistic regression! Lets dive right into
+it and start making sense of the model output.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m1 <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(dv}\OperatorTok{~}\NormalTok{par2,}
+          \DataTypeTok{family =} \KeywordTok{binomial}\NormalTok{(), GLMdata)}
+\KeywordTok{summary}\NormalTok{(m1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = dv ~ par2, family = binomial(), data = GLMdata)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.5867  -0.8174   0.0000   0.8174   1.5867  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)  -0.9247     0.1403  -6.593 4.31e-11 ***
+## par2B         1.8494     0.1983   9.324  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 693.15  on 499  degrees of freedom
+## Residual deviance: 596.69  on 498  degrees of freedom
+## AIC: 600.69
+## 
+## Number of Fisher Scoring iterations: 4
+\end{verbatim}
+
+\hypertarget{the-z-statistic}{%
+\subsubsection{2.1.1. The z-statistic}\label{the-z-statistic}}
+
+In liner regression, we used the estimated regression coefficients and
+their standard errors to compute a t-statistic. Here we are using the
+analogous z-statistic, which follows the normal distribution. So you can
+use this to evaluate if the coefficient of the predictor is
+significantly different from zero. We should remember here, that the
+z-statistic is generally being underestimated when the regression
+coefficient is large, because the standard errors tend to become
+inflated. In this test we are more likely to make a Type II error.
+
+\hypertarget{odds-ratio}{%
+\subsubsection{2.1.2. Odds ratio}\label{odds-ratio}}
+
+Another conceptual milestone and something which is very important for
+the interpretation of logistic regression is the value of the odds
+ratio. This indicates the change in odds resulting from a unit change in
+the predictor and is denoted by the exponential of the coefficient
+(==exp(Estimate)).
+
+When predicting a categorial outcome (smth happening (1) vs.~nothing
+happening (0)), the odds of an event occurring are defined as the
+probability of an event occurring divided by the probability of that
+event not occurring. In order to calculate the change in odds that
+result from a unit change in the predictor, we must first calculate the
+odds of one of the events (e.g.~A), the odds of the other event (e.g.~B)
+and finally calculate the proportionate change in these two odds. This
+change is what we call odds ratio. When the value is greater than 1,
+then we know that as the predictor increases, the odds of the outcome
+increase. A value less than 1 indicates that as the predictor increases,
+the odds of the outcome occurring decrease.
+
+Wow, this is a lot! Somewhat intuitive maybe, but not for me. I need to
+touch the data before this makes sense to me. So lets try finding this
+theoretical construct in our model output. Currently, the coefficient
+values are represented in logits - the logarithm of the odds of dv
+occurring. Thus, the exponential of the coefficients will yield the odd
+ratios. Lets evaluate this while at the same time reminding us of the
+way we have coded the contrasts and the model output.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{contrasts}\NormalTok{(GLMdata}\OperatorTok{$}\NormalTok{par2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   B
+## A 0
+## B 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(m1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = dv ~ par2, family = binomial(), data = GLMdata)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.5867  -0.8174   0.0000   0.8174   1.5867  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)  -0.9247     0.1403  -6.593 4.31e-11 ***
+## par2B         1.8494     0.1983   9.324  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 693.15  on 499  degrees of freedom
+## Residual deviance: 596.69  on 498  degrees of freedom
+## AIC: 600.69
+## 
+## Number of Fisher Scoring iterations: 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{exp}\NormalTok{(m1}\OperatorTok{$}\NormalTok{coefficients)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## (Intercept)       par2B 
+##    0.396648    6.356080
+\end{verbatim}
+
+So here we can say that the odds of 1 occurring given B are approx.
+6-times higher than those of 1 occurring given A.
+
+So, if for example, the dependent variable here was accuracy (1 =
+Correct vs.~0 = Incorrect) and the predictor (par2) was Alcohol intake
+(A = Drunk vs.~B = Sober), we could say that the probability of you
+being correct when you are sober is 6-times higher compared to when you
+are drunk. Please take the time to compare all the values in the outputs
+above to make sure that this makes sense.
+
+When we increase x by one unit the odds are multiplied by
+exp(coefficient). Odds increase when the probability of success
+increases, so that if your coefficient is positive, increasing x will
+increase your probability. Lets try to reconstruct the intercept and
+coefficient:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{aggregate}\NormalTok{(dv}\OperatorTok{~}\NormalTok{par2,GLMdata,mean) }\CommentTok{# probability of 1 given A and 1 given B}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   par2    dv
+## 1    A 0.284
+## 2    B 0.716
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FloatTok{0.284}\OperatorTok{/}\FloatTok{0.716} \CommentTok{# computing the odds for 1 given A (== intercept)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.396648
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FloatTok{0.716}\OperatorTok{/}\FloatTok{0.284} \CommentTok{# computing the odds for 1 given B}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.521127
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FloatTok{2.521127}\OperatorTok{/}\FloatTok{0.396648} \CommentTok{# odds ratio for 1 as you go from A to B (== slope)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6.356081
+\end{verbatim}
+
+\hypertarget{deviance}{%
+\subsubsection{2.1.3. Deviance}\label{deviance}}
+
+The deviance statistic gives us the overall fit of the model - larger
+values indicate poorer-fitting. The Null deviance indicates the deviance
+of the baseline model, so the one which uses category frequency as its
+model. The residual deviance is the deviance for the model we fitted to
+the data. So this value should be lower then then Null deviance,
+indicating a better fit. Conceptually, this means that adding par2 to
+the model, made the model better in predicting dv.
+
+We can test if we get a better fit compared to the baseline model, in
+the same way in which we test different models against each other.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anova}\NormalTok{(m1, }\DataTypeTok{test=}\StringTok{"Chisq"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Deviance Table
+## 
+## Model: binomial, link: logit
+## 
+## Response: dv
+## 
+## Terms added sequentially (first to last)
+## 
+## 
+##      Df Deviance Resid. Df Resid. Dev  Pr(>Chi)    
+## NULL                   499     693.15              
+## par2  1   96.456       498     596.69 < 2.2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\hypertarget{ruxb2}{%
+\subsubsection{2.1.4. R²}\label{ruxb2}}
+
+As you might have noticed, R did not provide us with an R² value. We
+will stumble upon curiosities like this from time to time in this
+lecture. There actually is a good reason not to report R². There is
+various packages and functions which will provide you with the optimal
+tools to derive an R² value - I will leave it up to you to find one in
+case it is required from you. I will provide you with the means of
+calculating Hosmer \& Lemeshow's R² in order to satisfy APA guidelines:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(r_squared <-}\StringTok{ }\NormalTok{(m1}\OperatorTok{$}\NormalTok{null.deviance}\OperatorTok{-}\NormalTok{m1}\OperatorTok{$}\NormalTok{deviance)}\OperatorTok{/}\NormalTok{m1}\OperatorTok{$}\NormalTok{null.deviance)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.139156
+\end{verbatim}
+
+2.1.5. Confidence interval Finally, as with linear regression, we can
+easily compute the confidence intervals for our coefficients.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{confint}\NormalTok{(m1) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Waiting for profiling to be done...
+\end{verbatim}
+
+\begin{verbatim}
+##                 2.5 %     97.5 %
+## (Intercept) -1.205518 -0.6548111
+## par2B        1.465784  2.2439485
+\end{verbatim}
+
+or wrap the exp() function around it for the odds ratio values The
+critical thing to look out for here is that the interval does not cross
+1. Values greater than 1 mean that as the predictor variable increases,
+so do the odds of dv.
+
+\hypertarget{predicting-probabilities}{%
+\subsubsection{2.1.6. Predicting
+probabilities}\label{predicting-probabilities}}
+
+This is a bit trivial in our simple case, but we can easily calculate
+point predictions for our dependent variable for each value of a
+predictor.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{newdf <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{par2=}\StringTok{"B"}\NormalTok{)}
+\KeywordTok{predict}\NormalTok{(m1, newdf, }\DataTypeTok{type=}\StringTok{"response"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     1 
+## 0.716
+\end{verbatim}
+
+\hypertarget{adding-a-second-predictor}{%
+\subsection{2.2. Adding a second
+predictor}\label{adding-a-second-predictor}}
+
+Now, its your turn to get active. Add par1 as an additive predictor to
+the model. Is par1 a significant predictor? How about the overall model?
+Is it significantly better in explaining the data compared to the
+previous model? Use the anova function to compare the two models. All
+tools for this calculation are available to you from this and the last
+session.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m2 <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(dv}\OperatorTok{~}\NormalTok{par2 }\OperatorTok{+}\StringTok{ }\NormalTok{par1,}
+          \DataTypeTok{family =} \KeywordTok{binomial}\NormalTok{(), GLMdata)}
+\KeywordTok{summary}\NormalTok{(m2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = dv ~ par2 + par1, family = binomial(), data = GLMdata)
+## 
+## Deviance Residuals: 
+##      Min        1Q    Median        3Q       Max  
+## -1.65786  -0.83862   0.01563   0.83547   1.70097  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept) -1.28303    0.35783  -3.586 0.000336 ***
+## par2B        1.84198    0.19860   9.275  < 2e-16 ***
+## par1         0.10471    0.09557   1.096 0.273213    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 693.15  on 499  degrees of freedom
+## Residual deviance: 595.49  on 497  degrees of freedom
+## AIC: 601.49
+## 
+## Number of Fisher Scoring iterations: 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{exp}\NormalTok{(m2}\OperatorTok{$}\NormalTok{coefficients)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## (Intercept)       par2B        par1 
+##   0.2771973   6.3089989   1.1103925
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{anova}\NormalTok{(m1, m2, }\DataTypeTok{test =} \StringTok{"Chisq"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Deviance Table
+## 
+## Model 1: dv ~ par2
+## Model 2: dv ~ par2 + par1
+##   Resid. Df Resid. Dev Df Deviance Pr(>Chi)
+## 1       498     596.69                     
+## 2       497     595.49  1   1.2048   0.2724
+\end{verbatim}
+
+Par1 is not a significant predictor, and the second model is not a
+better fit.
+
+Play around with different values for par1 and par2, in order to gain an
+intuition of the predicted probabilities of logistic regressions.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{newdf <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{par1=}\DecValTok{3}\NormalTok{, }\DataTypeTok{par2=}\StringTok{"B"}\NormalTok{)}
+\KeywordTok{predict}\NormalTok{(m2, newdf, }\DataTypeTok{type=}\StringTok{"response"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         1 
+## 0.7053887
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{aggregate}\NormalTok{(dv}\OperatorTok{~}\NormalTok{par2}\OperatorTok{+}\NormalTok{par1,GLMdata,mean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    par2 par1        dv
+## 1     A    1 0.3000000
+## 2     B    1 0.4000000
+## 3     A    2 0.3750000
+## 4     B    2 0.7000000
+## 5     A    3 0.3166667
+## 6     B    3 0.6333333
+## 7     A    4 0.2666667
+## 8     B    4 0.7111111
+## 9     A    5 0.1000000
+## 10    B    5 0.9000000
+\end{verbatim}
+
+\hypertarget{teaser-aggregating-and-plotting}{%
+\section{3. Teaser: aggregating and
+plotting}\label{teaser-aggregating-and-plotting}}
+
+Visualization of data is the number one tool for extracting meaning from
+your results. We were having a lot of fun running various logistic
+regressions, but sometimes a quick look at the data will reveal a
+relationship that we might have completely missed. Think about what we
+have been modeling and what we have not been modeling. We will talk
+about more complex relationships in upcoming sessions.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{agg <-}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(dv}\OperatorTok{~}\NormalTok{par2}\OperatorTok{+}\NormalTok{par1,GLMdata,mean)}
+\KeywordTok{ggplot}\NormalTok{(agg, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{par1, }\DataTypeTok{y=}\NormalTok{dv, }\DataTypeTok{color=}\NormalTok{par2))}\OperatorTok{+}\KeywordTok{geom_line}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Problemsheet5_files/figure-latex/unnamed-chunk-25-1.pdf}
+
+\end{document}
