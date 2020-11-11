@@ -14,9 +14,12 @@ library(tidyverse)
 library(kableExtra)
 library(languageR)
 library(gtools)
+library(plyr)
+library(RColorBrewer)
+library(lsr)
 ```
 
-#1. Data manipulation and visualization - ugh, not again!!!
+# 1. Data manipulation and visualization - ugh, not again!!!
 
 ```{r}
 data(lexdec)
@@ -34,3 +37,142 @@ head(data)
 summary(data)
 ```
 This script added a FREQ variable with the categories of high and low. The script divided the Frequency into 2 groups at the 50% quantile.
+
+## 1.1. Independent (between-group) vs. repeated-measures design
+
+## 1.2. Summarizing data for independent and repeated-measures
+
+```{r}
+aggregate(RT~Subject,data, mean)
+
+(aggFRQ <- aggregate(RT~Subject+FRQ,data, mean))
+
+(aggNL <- aggregate(RT ~ Subject + NativeLanguage, data, mean))
+```
+
+### 1.2.1. Loading functions from file
+
+```{r}
+source("./data/summarySE.R")
+
+summarySE
+```
+
+### 1.2.2. Summarizing your final pre-plot table
+
+```{r}
+(table <- summarySE(data=aggFRQ, measurevar = "RT", groupvars = "FRQ"))
+
+ggplot(table, aes(y=RT, x=FRQ, fill=FRQ)) + geom_bar(stat = "identity")+
+  geom_errorbar(aes(ymin=RT-se,ymax=RT+se), width=.1, size=1)+
+  coord_cartesian(ylim=c(4, 7))
+```
+```{r}
+source("./data/normDataWithin.R")
+source("./data/summarySEwithin.R")
+
+(table <- summarySEwithin(data=aggFRQ, measurevar = "RT", withinvars = "FRQ"))
+ggplot(table, aes(y=RT, x=FRQ, fill=FRQ)) + geom_bar(stat = "identity") + coord_cartesian(ylim=c(4, 7)) +
+  geom_errorbar(aes(ymin=RT-se,ymax=RT+se), width=.1, size=1)
+```
+Now, please plot reaction times as a function of NativeLanguage.
+```{r}
+(table <- summarySE(data = aggNL, measurevar = "RT", groupvars = "NativeLanguage"))
+
+ggplot(table, aes(y=RT, x=NativeLanguage, fill=NativeLanguage)) + geom_bar(stat = "identity")+
+  geom_errorbar(aes(ymin=RT-se,ymax=RT+se), width=.1, size=1)+
+  coord_cartesian(ylim=c(4, 7))
+```
+```{r}
+(sumagg <- aggregate(RT ~ Subject + FRQ + NativeLanguage, data, mean))
+
+(sumtable <- summarySEwithin(data = sumagg, measurevar = "RT", betweenvars = "NativeLanguage", withinvars = "FRQ"))
+
+ggplot(sumtable, aes(y = RT, x = NativeLanguage, fill = FRQ)) +
+  geom_col(position = "dodge")+
+  geom_errorbar(aes(ymin = RT - se, ymax = RT + se), width = .1, size = 1, position = position_dodge(width = 0.9)) +
+  scale_fill_brewer(palette="Set3") +
+  coord_cartesian(ylim = c(4, 7))
+```
+
+# 2. The t-test
+
+## 2.1. The t-test as a general linear model
+
+```{r}
+summary(lm(RT~FRQ, data = aggFRQ))$coefficients
+t.test(RT~FRQ, data = aggFRQ)
+```
+
+## 2.2. Conducting t-tests.
+```{r}
+(tNL <- t.test(RT~NativeLanguage, data = aggNL))
+
+(tFRQ <- t.test(RT~FRQ, data = aggFRQ, paired = TRUE))
+```
+
+##2.3. Calculating effect size
+
+### 2.3.1. r
+
+```{r}
+(t <- tNL$statistic[[1]])
+(df <- tNL$parameter[[1]])
+(r <- sqrt(t^2/(t^2+df))) 
+
+(t <- tFRQ$statistic[[1]])
+(df <- tFRQ$parameter[[1]])
+(r <- sqrt(t^2/(t^2+df)))
+```
+
+### 2.3.2. Cohen’s d
+
+For independent measures:
+```{r}
+(SD1 <- sd(aggNL$RT[ which(aggNL$NativeLanguage == "English") ]))
+(SD2 <- sd(aggNL$RT[ which(aggNL$NativeLanguage == "Other") ]))
+(SDpooled <- sqrt(((SD1^2)+(SD2^2))/2))
+(Mdiff <- tNL$estimate[[2]]-tNL$estimate[[1]])
+Mdiff/SDpooled
+
+#OR
+
+cohensD(RT ~ NativeLanguage, data = aggNL, method = "unequal")
+```
+
+For independent measures (unequal sample size - appropriate for this data):
+```{r}
+(SD1 <- sd(aggNL$RT[ which(aggNL$NativeLanguage == "English") ]))
+(SD2 <- sd(aggNL$RT[ which(aggNL$NativeLanguage == "Other") ]))
+(SDpooled <- sqrt((((12-1)*(SD1^2))+((9-1)*(SD2^2)))/(12+9-2)))
+(Mdiff <- tNL$estimate[[2]]-tNL$estimate[[1]])
+Mdiff/SDpooled
+
+#OR
+
+cohensD(RT ~ NativeLanguage, data = aggNL)
+```
+
+For dependent measures:
+```{r}
+cor(aggFRQ$RT[ which(aggFRQ$FRQ == "high")], aggFRQ$RT[ which(aggFRQ$FRQ == "low") ])
+
+(SD1 <- sd(aggFRQ$RT[ which(aggFRQ$FRQ == "high") ]))
+(SD2 <- sd(aggFRQ$RT[ which(aggFRQ$FRQ == "low") ]))
+(SDwithin <- sqrt((SD1^2)+(SD2^2)-(2*0.9369256*SD1*SD2)))
+(Mdiff <- 0.1192309)
+Mdiff/SDwithin
+
+#OR
+
+cohensD(RT ~ FRQ, data = aggFRQ, method = "paired")
+```
+
+## 2.4. Reporting t-tests
+
+*For independent measures:*
+
+An independent samples t-test was run to compare the reaction times of participants depending on their native language. The results were significant (*t*(11.63) = -2.37, *p* = 0.04, 95% CI [-0.30, -0.01], $\hat{d}$ = 1.14), indicating that participants who spoke English as their native language had a significantly faster response time. 
+
+*For dependent measures:*
+A paired samples t-test was run to compare the reaction times of participants depending on the level of word frequency. The results were significant (*t*(20) = 7.94, *p* < 0.05, 95% CI [0.15, 0.09], $\hat{d}$ = 1.73), indicating that participants had a significantly faster response time for high frequency words.
