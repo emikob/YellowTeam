@@ -175,4 +175,5 @@ cohensD(RT ~ FRQ, data = aggFRQ, method = "paired")
 An independent samples t-test was run to compare the reaction times of participants depending on their native language. The results were significant (*t*(11.63) = -2.37, *p* = 0.04, 95% CI [-0.30, -0.01], $\hat{d}$ = 1.14), indicating that participants who spoke English as their native language had a significantly faster response time. 
 
 *For dependent measures:*
+
 A paired samples t-test was run to compare the reaction times of participants depending on the level of word frequency. The results were significant (*t*(20) = 7.94, *p* < 0.05, 95% CI [0.15, 0.09], $\hat{d}$ = 1.73), indicating that participants had a significantly faster response time for high frequency words.
