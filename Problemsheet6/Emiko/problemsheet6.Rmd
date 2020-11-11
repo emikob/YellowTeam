@@ -1,0 +1,36 @@
+---
+title: "Problemsheet 6"
+author: "Emiko Bell"
+date: "11/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(psych)
+library(ggplot2)
+library(car)
+library(tidyverse)
+library(kableExtra)
+library(languageR)
+library(gtools)
+```
+
+#1. Data manipulation and visualization - ugh, not again!!!
+
+```{r}
+data(lexdec)
+selection <- c("Subject", "RT", "NativeLanguage", "Frequency","SubjFreq")
+data <- lexdec[selection]
+
+head(data) %>%
+  knitr::kable(digits = 2)
+summary(data)
+```
+```{r}
+data$FRQ <- quantcut(data$Frequency, q=seq(0,1,1/2),
+                       labels = c("low", "high"))
+head(data)
+summary(data)
+```
+This script added a FREQ variable with the categories of high and low. The script divided the Frequency into 2 groups at the 50% quantile.
