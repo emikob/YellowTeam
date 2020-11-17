@@ -34,7 +34,7 @@ summary(data)
 data$FRQ <- quantcut(data$Frequency, q=seq(0,1,1/2),
                        labels = c("low", "high"))
 head(data)
-summary(data)
+summary(data$FRQ)
 ```
 This script added a FREQ variable with the categories of high and low. The script divided the Frequency into 2 groups at the 50% quantile.
 
