@@ -1,0 +1,80 @@
+---
+title: "HT Problemsheet 1"
+author: "Emiko Bell"
+date: "1/19/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(psych)
+library(ggplot2)
+library(car)
+library(tidyverse)
+library(kableExtra)
+library(languageR)
+library(gtools)
+library(plyr)
+library(RColorBrewer)
+library(lsr)
+library(MASS)
+library(QuickEnvironment)
+library(lmerTest)
+```
+```{r}
+data(lexdec)
+data <- lexdec
+data$FRQ <- quantcut(data$Frequency, q=seq(0,1,1/3),
+                       labels = c("low","med","high"))
+
+lambdaList <- boxcox(exp(RT) ~ Subject, data = data)
+
+# Power coefficient suggests a speed transformation
+(lambda <- lambdaList$x[which.max(lambdaList$y)])
+data <- transform(data, speed=1000/exp(RT)) # 1000 instead of 1, to make the values a bit easier to handle
+```
+```{r}
+plot(data$RT, data$speed) 
+```
+```{r}
+(aggSUB <- aggregate(speed~Subject+NativeLanguage+FRQ,data, mean))
+
+str(aggSUB)
+summary(aov(speed ~ NativeLanguage*FRQ + Error(Subject/FRQ), data=aggSUB))
+```
+```{r}
+(table.F1 <- summarySEwithin(data=aggSUB, idvar = "Subject", measurevar = "speed", withinvars = "FRQ", betweenvars = "NativeLanguage"))
+library(ggplot2)
+ggplot(data=table.F1, aes(x=FRQ, y=speed, group=NativeLanguage, colour=NativeLanguage)) + geom_point()+geom_line()+
+    geom_errorbar(aes(ymax=speed+se, ymin=speed-se), width=0.02) + ylab("Response speed") + theme_bw()
+```
+```{r}
+(aggWORD <- aggregate(speed~Word+NativeLanguage+FRQ,data, mean))
+str(aggWORD)
+summary(aov(speed ~ NativeLanguage*FRQ + Error(Word/FRQ), data=aggWORD))
+
+(table.F1 <- summarySEwithin(data=aggWORD, idvar = "Word", measurevar = "speed", withinvars = "FRQ", betweenvars = "NativeLanguage"))
+
+ggplot(data=table.F1, aes(x=FRQ, y=speed, group=NativeLanguage, colour=NativeLanguage)) + geom_point()+geom_line()+
+    geom_errorbar(aes(ymax=speed+se, ymin=speed-se), width=0.02) + ylab("Response speed") + theme_bw()
+```
+```{r}
+library(lmerTest)
+summary(m0 <- lmer(speed ~ NativeLanguage*FRQ +
+                           (1 | Subject) +
+                           (1 | Word),
+                         data=data))
+
+mean(data$speed[data$NativeLanguage=="English" & data$FRQ == "low"]) # compare to intercept
+contrasts(data$NativeLanguage)
+contrasts(data$FRQ)
+
+head(coefficients(m0)$Subject)
+head(coefficients(m0)$Word)
+
+summary(m1 <- lmer(speed ~ NativeLanguage*FRQ +
+                           (1 + FRQ | Subject) +
+                           (1 | Word),
+                         data=data))
+```
+
